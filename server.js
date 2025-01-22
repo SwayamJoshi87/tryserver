@@ -144,8 +144,8 @@ async function automateWebsite(domain) {
     await page.type(emailSelector, randomEmail);
     console.log(`[ACTION] Filled email with: ${randomEmail}`);
 
-    // Wait 3 seconds
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // Wait 1 seconds
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Wait for submit button and click
     const submitButtonSelector = 'button[type="submit"]';
@@ -160,7 +160,7 @@ async function automateWebsite(domain) {
     console.log("[NAVIGATE] New page loaded.");
 
     // Wait 5 seconds
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // Attempt to interact with elements using class names
     for (const cssSelector of cssSelectors) {
