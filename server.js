@@ -245,8 +245,8 @@ async function automateWebsite(domain) {
     await page.type('input[name="IBAN"]', staticIban);
     console.log(`[ACTION] Filled IBAN with: ${staticIban}`);
 
-    // Wait 4 seconds
-    await new Promise((resolve) => setTimeout(resolve, 4000));
+    // Wait 1 seconds
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Check the customer_sepa_mandate checkbox
     const sepaCheckbox = await page.$('input[name="customer_sepa_mandate"]');
@@ -262,8 +262,8 @@ async function automateWebsite(domain) {
       console.error("[ERROR] customer_sepa_mandate checkbox not found.");
     }
 
-    // Wait 3 seconds
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    // Wait 1 seconds
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Fill in the BIC
     console.log("[INFO] Waiting for BIC input...");
@@ -271,8 +271,8 @@ async function automateWebsite(domain) {
     await page.type('input[name="BIC"]', staticBic);
     console.log(`[ACTION] Filled BIC with: ${staticBic}`);
 
-    // Wait 5 seconds
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    // Wait 1 seconds
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Click submit button
     const finalButtonSelector = 'button[name="submitButton"]';
