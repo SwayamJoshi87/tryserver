@@ -130,8 +130,8 @@ async function automateWebsite(domain) {
     console.log(`[NAVIGATE] Successfully loaded: ${url}`);
 
     // Wait a bit after page load
-    console.log("[WAIT] Waiting 10 seconds to ensure page load...");
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    console.log("[WAIT] Waiting 5 seconds to ensure page load...");
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
     // Wait for email field
     const emailSelector = 'input[type="email"]';
@@ -160,7 +160,7 @@ async function automateWebsite(domain) {
     console.log("[NAVIGATE] New page loaded.");
 
     // Wait 5 seconds
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // Attempt to interact with elements using class names
     for (const cssSelector of cssSelectors) {
@@ -287,8 +287,8 @@ async function automateWebsite(domain) {
     console.log("[NAVIGATE] Final page loaded.");
 
     // Wait for 10 seconds for demonstration
-    console.log("[WAIT] Waiting 10 seconds after final step...");
-    await new Promise((resolve) => setTimeout(resolve, 10000));
+    console.log("[WAIT] Waiting 2 seconds after final step...");
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     console.log(`[SUCCESS] Automation finished for domain: ${domain}`);
     return {
