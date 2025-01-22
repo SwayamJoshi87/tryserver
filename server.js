@@ -118,7 +118,7 @@ async function automateWebsite(domain) {
     page = await browser.newPage();
 
     // Set viewport
-    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setViewport({ width: 1280, height: 720 });
     console.log("[INFO] Viewport set to 1920x1080");
 
     // Construct URL
