@@ -294,7 +294,7 @@ async function automateWebsite(domain) {
     return {
       username,
       password,
-      link: `https://${domain}.com`,
+      link: `https://site-ma.${domain}.com`,
     };
   } catch (err) {
     console.error(`[ERROR] automateWebsite error: ${err.message}`);
