@@ -159,8 +159,8 @@ async function automateWebsite(domain) {
     await page.waitForNavigation({ waitUntil: "load", timeout: 10000 });
     console.log("[NAVIGATE] New page loaded.");
 
-    // Wait 5 seconds
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // Wait 3 seconds
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Attempt to interact with elements using class names
     for (const cssSelector of cssSelectors) {
