@@ -102,7 +102,7 @@ async function initBrowser() {
   browser = await puppeteer.launch({
     executablePath: "/usr/bin/chromium-browser",
     headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ["--no-sandbox", "--disk-cache-dir=/cache", "--disable-setuid-sandbox"],
   });
   console.log("[INIT] Browser launched successfully.");
 }
