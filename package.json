@@ -3,6 +3,7 @@
     "express": "^4.21.2",
     "pupeteer": "^0.0.1",
     "puppeteer": "^24.1.0",
+    "puppeteer-core": "^24.1.0",
     "puppeteer-xpath": "^0.1.0"
   }
 }

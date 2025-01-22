@@ -94,8 +94,10 @@ function calculateCheckDigits(iban) {
 
 // Puppeteer automation function
 async function automateWebsite(domain) {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({executablePath: '/usr/bin/chromium-browser',  headless: true, args: ["--no-sandbox", "--disabled-setupid-sandbox"] });
   const page = await browser.newPage();
+
+
 
   // Set the viewport to 1920x1080 resolution
   await page.setViewport({ width: 1920, height: 1080 });
@@ -104,13 +106,13 @@ async function automateWebsite(domain) {
     const url = `https://${domain}.com/joinf`;
 
     // Navigate to the page
-    await page.goto(url, { waitUntil: "load", timeout: 10000 });
+    await page.goto(url, { waitUntil: "load", timeout: 100000 });
     console.log(`Navigated to ${url}`);
 
     page.waitForNavigation();
 
     // Wait for 5 seconds after the page loads
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     console.log("Waited for 5 seconds after page load.");
 
     // Wait for the email input field (input[type="email"]) to load
@@ -121,7 +123,7 @@ async function automateWebsite(domain) {
     await page.type(emailSelector, randomEmail);
     console.log(`Filled email field with: ${randomEmail}`);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Wait for the submit button (button[type="submit"]) to load
     const submitButtonSelector = 'button[type="submit"]';
