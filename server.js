@@ -200,17 +200,14 @@ async function automateWebsite(domain) {
     const phone = generateRandomPhone();
 
     console.log("[INFO] Filling form fields with random data...");
-    // Parallel form population
-    await Promise.all([
-      page.$eval("#username", (el, val) => el.value = val, username),
-      page.$eval("#password", (el, val) => el.value = val, password),
-      page.$eval("#firstName", (el, val) => el.value = val, firstName),
-      page.$eval("#lastName", (el, val) => el.value = val, lastName),
-      page.$eval("#address1", (el, val) => el.value = val, address1),
-      page.$eval("#city", (el, val) => el.value = val, city),
-      page.$eval("#zipCode", (el, val) => el.value = val, zipcode),
-      page.$eval("#phone", (el, val) => el.value = val, phone),
-    ]);
+    await page.type("#username", username);
+    await page.type("#password", password);
+    await page.type("#firstName", firstName);
+    await page.type("#lastName", lastName);
+    await page.type("#address1", address1);
+    await page.type("#city", city);
+    await page.type("#zipCode", zipcode);
+    await page.type("#phone", phone);
 
     console.log(`[DATA] username=${username}, password=${password}`);
 
