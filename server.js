@@ -1,11 +1,23 @@
+require('dotenv').config();  // Load environment variables
 const express = require("express");
 const puppeteer = require("puppeteer");
+const TelegramBot = require("node-telegram-bot-api");
 
 // ----------------------------------------
 // Configuration
 // ----------------------------------------
+
 const app = express();
 const port = 3000;
+
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+
+if (!TELEGRAM_BOT_TOKEN) {
+  console.error("Error: TELEGRAM_BOT_TOKEN is not set in environment variables!");
+  process.exit(1);
+}
+
+const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
 
 // List of supported domains
 const supportedDomains = [
@@ -347,6 +359,43 @@ app.get("/:domain", async (req, res) => {
       error: "An error occurred during automation.",
       details: error.message,
     });
+  }
+});
+
+// ----------------------------------------
+// Telegram Bot Logic
+// ----------------------------------------
+bot.onText(/\/start/, (msg) => {
+  bot.sendMessage(
+    msg.chat.id,
+    `Welcome! You can use the following commands:\n\n` +
+      `/list - Get the list of available websites\n\n` +
+      `/get [website] - to get the username and password of the required website\n\n` +
+      `So if you want realitykings, its /get realitykings`
+  );
+});
+
+bot.onText(/\/list/, (msg) => {
+  bot.sendMessage(msg.chat.id, `Supported domains:\n${supportedDomains.join("\n")}`);
+});
+
+bot.onText(/\/get (.+)/, async (msg, match) => {
+  const chatId = msg.chat.id;
+  const domain = match[1].toLowerCase();
+
+  if (!supportedDomains.includes(domain)) {
+    return bot.sendMessage(chatId, `❌ Unsupported website: ${domain}`);
+  }
+
+  bot.sendMessage(chatId, `🚀 Starting process for ${domain}... This usually takes around 1 minute`);
+  try {
+    const result = await automateWebsite(domain);
+    bot.sendMessage(
+      chatId,
+      `✅ Process successful!\n\nUsername: ${result.username}\nPassword: ${result.password}\nLink: ${result.link}`
+    );
+  } catch (error) {
+    bot.sendMessage(chatId, `❌ Automation failed: ${error.message}`);
   }
 });
 
