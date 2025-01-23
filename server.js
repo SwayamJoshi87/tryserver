@@ -1,4 +1,6 @@
 require('dotenv').config();  // Load environment variables
+
+const fs = require("fs");
 const express = require("express");
 const puppeteer = require("puppeteer");
 const TelegramBot = require("node-telegram-bot-api");
@@ -30,6 +32,7 @@ const supportedDomains = [
   "propertysex",
   "digitalplayground",
 ];
+
 
 // CSS selectors to search for in the second step
 const cssSelectors = ["css-1d80gjy", "css-ydn16", "css-gw1u79"];
@@ -104,6 +107,25 @@ function generateRandomName() {
   const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
   const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
   return { firstName, lastName };
+}
+
+// ----------------------------------------
+// Logging Function to Track Requests
+// ----------------------------------------
+const LOG_FILE = "automation_log.txt";
+
+// Function to log Telegram requests
+function logRequest(domain, user) {
+  const timestamp = new Date().toISOString();
+  const logMessage = `${timestamp} | Domain: ${domain} | UserID: ${user.id} | Username: ${user.username || "N/A"} | FirstName: ${user.first_name}\n`;
+  
+  fs.appendFile(LOG_FILE, logMessage, (err) => {
+    if (err) {
+      console.error("[ERROR] Failed to log request:", err.message);
+    } else {
+      console.log(`[LOG] Request logged: ${logMessage.trim()}`);
+    }
+  });
 }
 
 // ----------------------------------------
@@ -388,6 +410,10 @@ bot.onText(/\/get (.+)/, async (msg, match) => {
   }
 
   bot.sendMessage(chatId, `🚀 Starting process for ${domain}... This usually takes around 1 minute`);
+
+  // Log the request
+  logRequest(domain, msg.from);
+
   try {
     const result = await automateWebsite(domain);
     bot.sendMessage(
