@@ -141,10 +141,7 @@ async function automateWebsite(domain) {
 
     // Fill the email field with a random email
     const randomEmail = `${generateRandomString(12)}@somemail.com`;
-    await page.$eval(emailSelector, (el, value) => {
-      el.value = value;
-      el.dispatchEvent(new Event('input', { bubbles: true }));
-    }, randomEmail);
+    await page.type(emailSelector, randomEmail);
     console.log(`[ACTION] Filled email with: ${randomEmail}`);
 
     // Wait 1 seconds
